@@ -26,7 +26,7 @@ jobs:
       - name: Validate PR labels
         run: |
           # Check if "do not merge" label is present
-          if ! echo "${{ github.event.pull_request.labels }}" | grep -E 'name: do not merge'; then
+          if echo "${{ github.event.pull_request.labels }}" | grep -E 'name: do not merge'; then
             echo "Error: Pull request has 'do not merge' label"
             exit 1
           fi
