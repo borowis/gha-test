@@ -1,2 +1,2 @@
 # gha-test
-A repository for testing Github actions
+A repository for testing Github actions.
