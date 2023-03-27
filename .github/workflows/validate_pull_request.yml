@@ -18,7 +18,7 @@ jobs:
       - name: Validate PR title
         run: |
           # Check if PR title starts with "SDS-"
-          if ! echo "${{ github.event.pull_request.title }}" | grep -qE '^SDS-[0-9]{4,5} '; then
+          if ! echo '${{ github.event.pull_request.title }}' | grep -qE '^SDS-[0-9]{4,5} '; then
             echo "Error: Pull request title must start with 'SDS-<JIRA ID> '"
             exit 1
           fi
@@ -26,7 +26,7 @@ jobs:
       - name: Validate PR labels
         run: |
           # Check if "do not merge" label is present
-          if echo "${{ toJson(github.event.pull_request.labels) }}" | jq -r '.[].name' | grep -qE 'do not merge'; then
+          if echo '${{ toJson(github.event.pull_request.labels) }}' | jq -r '.[].name' | grep -qE 'do not merge'; then
             echo "Error: Pull request has 'do not merge' label"
             exit 1
           fi
