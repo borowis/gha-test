@@ -30,7 +30,8 @@ jobs:
           # Check if "do not merge" label is present
           PULL_REQUEST_LABELS=$(cat <<$EOF
           ${{ toJson(github.event.pull_request.labels) }}
-          $EOF)
+          $EOF
+          )
 
           echo "1: "
           echo "$PULL_REQUEST_LABELS"
