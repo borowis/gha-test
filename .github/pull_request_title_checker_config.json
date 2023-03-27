@@ -1,9 +1,0 @@
-{
-  "CHECKS": {
-    "regexp": "SDS-[0-9]{4,5} "
-  },
-  "MESSAGES": {
-    "success": "PR title is good",
-    "failure": "Please change the PR title"
-  }
-}

@@ -15,14 +15,18 @@ jobs:
     name: Validate PR
     runs-on: ubuntu-latest
     steps:
-      - name: Validate PR labels
-        uses: agilepathway/label-checker@v1.4.25
-        with:
-          none_of: do not merge
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Validate PR title
-        uses: thehanimo/pr-title-checker@v1.3.7
-        with:
-          configuration_path: ".github/pull_request_title_checker_config.json"
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Check if PR title starts with "SDS-"
+          if ! echo "${{ github.event.pull_request.title }}" | grep -E '^SDS-[0-9]{4,5} '; then
+            echo "Error: Pull request title must start with 'SDS-<JIRA ID> '"
+            exit 1
+          fi
+
+      - name: Validate PR labels
+        run: |
+          # Check if "do not merge" label is present
+          if ! echo "${{ github.event.pull_request.labels }}" | grep -E 'name: do not merge'; then
+            echo "Error: Pull request has 'do not merge' label"
+            exit 1
+          fi
