@@ -25,10 +25,15 @@ jobs:
 
       - name: Validate PR labels
         run: |
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+
           # Check if "do not merge" label is present
-          labels="${{ toJson(github.event.pull_request.labels) }}"
-          echo "$labels"
-          if echo "$labels' | jq -r '.[].name' | grep -qE 'do not merge'; then
+          echo "PULL_REQUEST_LABELS<<$EOF"
+          echo "${{ toJson(github.event.pull_request.labels) }}"
+          echo "$EOF"
+
+          echo "$PULL_REQUEST_LABELS"
+          if echo "$PULL_REQUEST_LABELS' | jq -r '.[].name' | grep -qE 'do not merge'; then
             echo "Error: Pull request has 'do not merge' label"
             exit 1
           fi
