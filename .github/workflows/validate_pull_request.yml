@@ -1,0 +1,28 @@
+name: Validate PR title and labels
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - reopened
+      - edited
+      - synchronize
+      - labeled
+      - unlabeled
+
+jobs:
+  validate_pull_request:
+    name: Validate PR
+    runs-on: [ self-hosted, helpscout-small ]
+    steps:
+      - name: Validate PR labels
+        uses: agilepathway/label-checker@v1.4.25
+        with:
+          none_of: do not merge
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Validate PR title
+        uses: thehanimo/pr-title-checker@v1.3.7
+        with:
+          configuration_path: ".github/pull_request_title_checker_config.json"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
